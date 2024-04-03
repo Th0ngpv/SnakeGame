@@ -11,18 +11,17 @@ body {
     min-height: 100vh;
     background-color: azure;
 }
-
-#wrapper {
+.wrapper {
     width: 65vmin;
-    height: 75vmin;
+    height: 70vmin;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     border-radius: 5px;
     background-color: #496c8e;
+    box-shadow: 0 20px 40px #2e445a;
 }
-
-#game-details {
+.game-details {
     color: lightblue;
     font-size: 1.2rem;
     font-weight: 500;
@@ -30,19 +29,16 @@ body {
     display: flex;
     justify-content: space-between;
 }
-
-#play-board {
+.play-board {
     width: 100%;
     height: 100%;
     display: grid;
     grid-template: repeat(30,1fr) / repeat(30, 1fr);
     background-color: #18232e;
 }
-
-#play-board .food {
+.play-board .food {
     background-color: red;
 }
-
-#play-board #snake {
+.play-board .snake {
     background-color: aqua;
 }
