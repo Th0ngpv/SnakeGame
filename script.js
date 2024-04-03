@@ -1,7 +1,7 @@
 const playBoard = document.querySelector(".play-board");
 
-let foodX = 13, foodY = 10;
-let snakeX = 5, snakeY = 10;
+let foodX = 1, foodY = 2;
+let snakeX = 3, snakeY = 2;
 let snakeBody =[];
 let velocityX = 0,velocityY = 0;
 let intervalId;
@@ -68,12 +68,16 @@ const initGame = () => {
     //check if the snake hit a wall
     if (snakeX <= 0 || snakeX > 30 || snakeY <= 0 || snakeY > 30) {
         gameOver = true;
-
     }
 
     //add a div for each part of the snake
     for(i = 0; i < snakeBody.length;i++) {
         htmlMarkUp += `<div class="snake" style="grid-area: ${snakeBody[i][1]} / ${snakeBody[i][0]}"></div>`;
+        //check if the snake hit the body
+        if (i !== 0 && snakeBody[0][1] === snakeBody[i][1]
+            && snakeBody[0][0] === snakeBody[i][0]) {
+            gameOver = true;
+        }
     }
 
     //add all the changes to play-board div
