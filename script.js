@@ -5,12 +5,20 @@ let snakeX = 5, snakeY = 10;
 let snakeBody =[];
 let velocityX = 0,velocityY = 0;
 let intervalId;
+let gameOver = false;
 
 //generate a random food position
 const changeFoodPosition = () => {
     //create an random X and Y coordination from 1-30 for food
     foodX = Math.floor(Math.random() * 30) + 1;
     foodY = Math.floor(Math.random() * 30) + 1;
+}
+
+//handle when gameOver = true
+const handleGameOver = () => {
+    clearInterval(intervalId);
+    alert("Game Over! click OK to play again.");
+    location.reload();
 }
 
 //change the direction of the snake base on arrow key
@@ -32,6 +40,9 @@ const changeDirection = (e) => {
 
 //create the main game
 const initGame = () => {
+    //check if gameOver = true
+    if (gameOver) return handleGameOver();
+
     //create the food element
     let htmlMarkUp = `<div class="food" style = "grid-area: ${foodY} / ${foodX}"></div>`;
 
@@ -53,6 +64,12 @@ const initGame = () => {
     //update the snake's head position base on the velocity
     snakeX += velocityX;
     snakeY += velocityY; 
+
+    //check if the snake hit a wall
+    if (snakeX <= 0 || snakeX > 30 || snakeY <= 0 || snakeY > 30) {
+        gameOver = true;
+
+    }
 
     //add a div for each part of the snake
     for(i = 0; i < snakeBody.length;i++) {
