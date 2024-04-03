@@ -42,3 +42,7 @@ body {
 #play-board .food {
     background-color: red;
 }
+
+#play-board #snake {
+    background-color: aqua;
+}
