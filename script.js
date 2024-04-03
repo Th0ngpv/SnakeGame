@@ -1,4 +1,7 @@
-const playBoard = document.querySelector(".play-board");
+const playBoard = document.querySelector("#play-board");
+const scoreElement = document.querySelector("#score");
+const highScoreElement = document.querySelector("#high-score")
+const controls = document.querySelectorAll("#controls i");
 
 let foodX = 1, foodY = 2;
 let snakeX = 3, snakeY = 2;
@@ -6,6 +9,11 @@ let snakeBody =[];
 let velocityX = 0,velocityY = 0;
 let intervalId;
 let gameOver = false;
+let score = 0;
+
+//get highScore from local storage
+let highScore = localStorage.getItem("high-score") || 0;
+highScoreElement.innerText = `High Score: ${highScore}`;
 
 //generate a random food position
 const changeFoodPosition = () => {
@@ -38,6 +46,10 @@ const changeDirection = (e) => {
     }
 }
 
+controls.forEach(key => {
+    //calling changeDirection on each key click and pass key dataset value as an object
+    key.addEventListener("click", () => changeDirection({key: key.dataset.key}));
+});
 //create the main game
 const initGame = () => {
     //check if gameOver = true
@@ -49,7 +61,19 @@ const initGame = () => {
     //check if snake eat the food
     if (snakeX === foodX && snakeY === foodY) {
         changeFoodPosition();
-        snakeBody.push([foodX,foodY]); //add the food position to the snake body array
+        //add the food position to the snake body array
+        snakeBody.push([foodX,foodY]); 
+
+        //update score and high score
+        score++;
+        highScore = score >= highScore ? score : highScore;
+
+        //initialize high-score in local storage
+        localStorage.setItem("high-score", highScore);
+
+        //display score to html
+        scoreElement.innerText = `Score: ${score}`;
+        highScoreElement.innerText = `High Score: ${highScore}`;
     }
 
     //shifting forward the values of elements in the snakeBody by one
@@ -73,6 +97,7 @@ const initGame = () => {
     //add a div for each part of the snake
     for(i = 0; i < snakeBody.length;i++) {
         htmlMarkUp += `<div class="snake" style="grid-area: ${snakeBody[i][1]} / ${snakeBody[i][0]}"></div>`;
+        
         //check if the snake hit the body
         if (i !== 0 && snakeBody[0][1] === snakeBody[i][1]
             && snakeBody[0][0] === snakeBody[i][0]) {
@@ -84,7 +109,7 @@ const initGame = () => {
     playBoard.innerHTML = htmlMarkUp;
 }
 
-
+//initialize the game
 changeFoodPosition();
 intervalId = setInterval(initGame,125);
 document.addEventListener("keydown",changeDirection);
