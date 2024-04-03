@@ -1,10 +1,10 @@
 const playBoard = document.querySelector(".play-board");
 
 let foodX = 13, foodY = 10;
-let snakeX = 5, SnakeY = 10;
+let snakeX = 5, snakeY = 10;
 let snakeBody =[];
 let velocityX = 0,velocityY = 0;
-let timerId = null;
+let intervalId;
 
 //generate a random food position
 const changeFoodPosition = () => {
@@ -30,36 +30,40 @@ const changeDirection = (e) => {
     }
 }
 
+//create the main game
 const initGame = () => {
     //create the food element
-    let html = `<div class="food" style = "grid-area: ${foodX} / ${foodY}"></div>`;
-    //check if the snake head and the food are at the same position
-    if (snakeX === foodX && SnakeY === foodY) {
+    let htmlMarkUp = `<div class="food" style = "grid-area: ${foodY} / ${foodX}"></div>`;
+
+    //check if snake eat the food
+    if (snakeX === foodX && snakeY === foodY) {
         changeFoodPosition();
         snakeBody.push([foodX,foodY]); //add the food position to the snake body array
-        
-        console.log(snakeBody);
-    }
-    //update the snake's head position base on the velocity
-    snakeX += velocityX;
-    SnakeY += velocityY; 
- 
-    //shifting forward the values of element in the snake body by one
-    for (let i = snakeBody.length - 1; i > 0; i--) {
-        snakeBody[i] = snakeBody[i - 1];
     }
 
-    snakeBody[0] = [snakeX, SnakeY]; //create a default snake (the first element in the array)
-    
-    for (let i = 0; i < snakeBody.length; i++) {
-        //add a div for each part of a snake body
-        html += `<div class="snake" style ="grid-area: ${snakeBody[i][1]} / ${snakeBody[i][0]}"></div>`;
+    //shifting forward the values of elements in the snakeBody by one
+    for (let i = snakeBody.length - 1; i > 0; i--) {
+        snakeBody[i] = snakeBody[i - 1];
+        
     }
-    //create the snake head element
-    playBoard.innerHTML = html;
+
+    //create the first element of the snake array
+    snakeBody[0] = [snakeX,snakeY];
+
+    //update the snake's head position base on the velocity
+    snakeX += velocityX;
+    snakeY += velocityY; 
+
+    //add a div for each part of the snake
+    for(i = 0; i < snakeBody.length;i++) {
+        htmlMarkUp += `<div class="snake" style="grid-area: ${snakeBody[i][1]} / ${snakeBody[i][0]}"></div>`;
+    }
+
+    //add all the changes to play-board div
+    playBoard.innerHTML = htmlMarkUp;
 }
 
 
 changeFoodPosition();
-timerId = setInterval(initGame,125);
-document.addEventListener("keyup",changeDirection);
+intervalId = setInterval(initGame,125);
+document.addEventListener("keydown",changeDirection);
