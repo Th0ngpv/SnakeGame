@@ -1,15 +1,21 @@
+/* general settings */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: sans-serif;
 }
+/* main components settings */
 body {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     background-color: azure;
+}
+h1 {
+    text-shadow: 2px 2px 0.5px #88b8e6;
 }
 #wrapper {
     width: 65vmin;
@@ -19,8 +25,20 @@ body {
     overflow: hidden;
     border-radius: 5px;
     background-color: #344b61;
-    box-shadow: 0 20px 40px #2e445a;
+    box-shadow: 0 20px 40px #344b61;
 }
+footer {
+    margin-top: 20px;
+    border-radius: 3px;
+    background-color: #88b8e6;
+}
+footer a{
+    padding: 5px;
+    font-size: large;
+    font-weight: bold;
+    color: #2e445a;
+}
+/* score board settings */
 #game-details {
     color: lightblue;
     font-size: 1.1rem;
@@ -29,6 +47,7 @@ body {
     display: flex;
     justify-content: space-between;
 }
+/* main game settings */
 #play-board {
     width: 100%;
     height: 100%;
@@ -42,11 +61,11 @@ body {
 #play-board .snake {
     background-color: aqua;
 }
+/* controls panel settings */
 #controls {
     display: none;
     flex-direction: row;
 }
-
 #controls i {
     padding: 25px 0;
     color: aliceblue;
@@ -54,10 +73,10 @@ body {
     cursor: pointer;
     font-size: 1.3rem;
     width: calc(100% /4);
-    border-right: 1px solid #0d141c;
+    border-right: 1px solid #18232e;
 }
-
-@media  screen and (max-width: 800px) {
+/* smaller media settings */
+@media  screen and (max-width: 820px) {
     #wrapper {
         width: 90vmin;
         height: 115vmin;
